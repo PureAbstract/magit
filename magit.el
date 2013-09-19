@@ -182,7 +182,9 @@ Also set the local value in all Magit buffers and refresh them.
   (let ((version (format "%s.%s"
                          emacs-major-version
                          emacs-minor-version)))
-    (or (let ((exec-path (list invocation-directory)))
+    (or (let ((exec-path (append (list invocation-directory)
+                                 (and (featurep 'aquamacs)
+                                      (list (concat invocation-directory "bin"))))))
           (or (executable-find (format "emacsclient-%s" version))
               (executable-find (format "emacsclient-%s.exe" version))
               (executable-find "emacsclient")
